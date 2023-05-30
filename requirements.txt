@@ -1,0 +1,9 @@
+numpy
+pandas
+
+git+https://github.com/glichtner/fhir.resources.git
+
+fhirclient
+openpyxl
+wfdb
+
