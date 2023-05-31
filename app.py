@@ -30,12 +30,10 @@ def load_static_resources(server):
 def main():
     smart = init_fhir_server()
     dataset_loaders = [
-        # WESADLoader("./datasets/WESAD", smart),
-        # WSPCPLoader("datasets/WSPCP", smart),
-        # SDNLoader("datasets/Stress-Detection-in-Nurses-main", smart)
+        WESADLoader("./datasets/WESAD", smart),
+        WSPCPLoader("datasets/WSPCP", smart),
+        SDNLoader("datasets/Stress-Detection-in-Nurses-main", smart),
         SRADLoader("datasets/stress-recognition-in-automobile-drivers-1.0.0", smart)
-
-
     ]
 
     load_static_resources(smart)
