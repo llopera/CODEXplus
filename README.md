@@ -25,6 +25,11 @@ hapi-fhir-jpaserver-start:
       hapi.fhir.fhir_version: "R5"
 ...
 ```
+
+To run the server use the following:
+```shell
+docker compose up
+```
 When accessing localhost:8080, the default HAPI FHIR server page should be available. The following version values should be displayed:
 
 
@@ -46,10 +51,45 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-run the cleint as follows:
+run the client as follows:
 
 ```shell
 python app.py
 ```
 The client will download the required datasets into the datasets folder. Please be advise that the first time this 
 will require some time.
+
+## Troubleshooting
+
+If the datasets fail to download automatically please use the following links:
+
+
+| Dataset                                                                | File type     | URL |
+|------------------------------------------------------------------------|---------------| ----    |
+| [SRAD](https://physionet.org/content/drivedb/1.0.0/)                   | Dataset       |[ZIP fle](https://physionet.org/static/published-projects/drivedb/stress-recognition-in-automobile-drivers-1.0.0.zip)|
+| [SDN](https://datadryad.org/stash/dataset/doi:10.5061/dryad.5hqbzkh6f) | Dataset       | [ZIP file](https://datadryad.org/stash/downloads/file_stream/1022493) |
+|                                                                        | Questionnaires |  [XLS File](https://datadryad.<br/>org/stash/downloads/file_stream/1022492)|
+| [WESAD](https://archive.ics.uci.edu/ml/datasets/WESAD+%28Wearable+Stress+and+Affect+Detection%29)|  Dataset: | [ZIP File](https://uni-siegen.sciebo.de/s/HGdUkoNlW1Ub0Gx/download) |
+| [WSPCP](https://physionet.org/content/wearable-exam-stress/1.0.0/) | Dataset | [ZIP File](https://physionet.org/static/published-projects/wearable-exam-stress/a-wearable-exam-stress-dataset-for-predicting-cognitive-performance-in-real-world-settings-1.0.0.zip)|
+
+To avoid making code changes, please create and store dataset files in the `datasets/{$DATASET}` directory. Where 
+`${DATASET}` corresponds to the abbreviations from the previous table, e.g., SRAD. After downloading all files,  the 
+dataset directory should have the following structure:
+
+```shell
+datasets/
+    SDN/
+        Stress_dataset.zip
+        SurveyResults.xlsx
+    
+    SRAD/
+        stress-recognition-in-automobile-drivers-1.0.0.zip
+    
+    WESAD/
+        WESAD.zip
+    
+    WSPCP/
+        a-wearable-exam-stress-dataset-for-predicting-cognitive-performance-in-real-world-settings-1.0.0.zip
+```
+
+Running the `app.py` script will unpack the zip files as needed for the loaders.

@@ -98,7 +98,7 @@ class SDNLoader(Loader):
         return survey
 
     def get_patients(self):
-        for patient in glob(os.path.join(self.dataset_dir, self.sensor_data_folder) + "/*"):
+        for patient in next(os.walk(self.dataset_dir))[1]:
             yield Patient(id=f"SDN-{os.path.basename(patient)}")
 
     def get_empatica_id(self, participant):
@@ -157,7 +157,7 @@ class SDNLoader(Loader):
 
     def get_participant_logs(self, participant):
         data_folder_id = participant.id[-2:]
-        data_folder = os.path.join(self.dataset_dir, self.sensor_data_folder, data_folder_id, "*")
+        data_folder = os.path.join(self.dataset_dir, data_folder_id, "*")
         for zip_file in glob(data_folder):
             date_time = datetime.datetime.fromtimestamp(int(os.path.basename(zip_file)[3:-4]),
                                                         tz=pytz.timezone("US/Central"))

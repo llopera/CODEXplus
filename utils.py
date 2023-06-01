@@ -23,3 +23,15 @@ def get_codeable_reference(resource: Resource, code: [CodeableConcept, None, str
         codeable_reference["concept"] = code
 
     return codeable_reference
+
+
+def get_file_name(content_disposition):
+    list_cd = [item.strip().split("=") for item in content_disposition.split(";")]
+
+    file_name = ""
+    for item in list_cd:
+        if "filename" in item:
+            file_name = item[1].replace('"', "")
+
+    return file_name
+

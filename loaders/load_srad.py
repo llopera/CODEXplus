@@ -20,7 +20,8 @@ class SRADLoader(Loader):
         self.device_separator = "Recorder"
         study_id = "SRAD"
         title = "Detecting Stress During Real-World Driving Tasks Using Physiological Sensors"
-        super().__init__(dataset_dir, fhir_server, study_id, title, "Healey and Picard", date(day=16, month=6, year=2005))
+        data_name = next(os.walk(dataset_dir))[1][0]
+        super().__init__(os.path.join(dataset_dir, data_name), fhir_server, study_id, title, "Healey and Picard", date(day=16, month=6, year=2005))
 
     def get_patients(self):
         with open(os.path.join(self.dataset_dir, "RECORDS")) as records:

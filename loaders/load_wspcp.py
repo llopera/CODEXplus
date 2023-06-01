@@ -3,6 +3,7 @@ import os
 import pickle
 from datetime import datetime, date
 from glob import glob
+from zipfile import ZipFile
 
 import pandas as pd
 from fhir.resources.bodystructure import BodyStructure
@@ -21,9 +22,12 @@ class WSPCPLoader(Loader):
     def __init__(self, dataset_dir, fhir_server):
         title = "Wearable Stress and Affect Detection"
         study_id = "WSPCPL"
-        super().__init__(dataset_dir, fhir_server, study_id, title, "Rafiul et al.",
+
+        data_name = next(os.walk(dataset_dir))[1][0]
+        super().__init__(os.path.join(dataset_dir, data_name), fhir_server, study_id, title, "Rafiul et al.",
                          date(day=10, month=3, year=2022))
 
+        self.unzip_data()
         self.exams = ["Final", "Midterm 1", "Midterm 2"]
         self.grades = {}
         self.load_grades()
@@ -130,6 +134,20 @@ class WSPCPLoader(Loader):
 
             self.reference_observations[participant.id].append(parent_.id)
             self.server.create(parent_)
+
+    def unzip_data(self):
+        tale = os.path.join(self.dataset_dir, "unzipped")
+        if os.path.exists(tale):
+            return
+
+        print(f"Unzipping {self.study_id}'s Data.zip")
+        with ZipFile(os.path.join(self.dataset_dir, "Data.zip")) as zip_file:
+            zip_file.extractall(self.dataset_dir)
+
+        with open(tale, "w") as tale_file:
+            tale_file.write(os.path.join(self.dataset_dir, "Data.zip"))
+
+
 
 
 

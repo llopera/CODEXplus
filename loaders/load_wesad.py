@@ -43,7 +43,7 @@ class WESADLoader(Loader):
     def __init__(self, dataset_dir, fhir_server):
         study_id = "WESAD"
         title = "Wearable Stress and Affect Detection"
-        super().__init__(dataset_dir, fhir_server, study_id, title, "Schmidt et al.", date(day=16, month=10, year=2018))
+        super().__init__(os.path.join(dataset_dir, "WESAD"), fhir_server, study_id, title, "Schmidt et al.", date(day=16, month=10, year=2018))
 
         self.sessions = {}
         self.questionnaires = ["PANAS", "SAM", "STAI", "SSSQ"]
